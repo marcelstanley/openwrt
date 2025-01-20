@@ -61,7 +61,12 @@ EXTRA_CFLAGS:= -D_LUNATIK -D_KERNEL -DLUNATIK_RUNTIME=$(CONFIG_LUNATIK_RUNTIME) 
 	-I$(PKG_BUILD_DIR) -I$(PKG_BUILD_DIR)/include -I$(PKG_BUILD_DIR)/lua \
 	-I$(PKG_BUILD_DIR)$(KLIBC_USR)/include/arch/$(KLIBC_ARCH)
 
-LUA_API = lua/lua.h lua/lauxlib.h lua/lualib.h
+LUA_API:= lua/lua.h lua/lauxlib.h lua/lualib.h
+
+define Build/Prepare
+        $(Build/Prepare/Default)
+	cd $(PKG_BUILD_DIR) && ./gensymbols.sh $(LUA_API) > lunatik_sym.h
+endef
 
 define Build/Compile
 	$(KERNEL_MAKE) M="$(PKG_BUILD_DIR)" EXTRA_CFLAGS="$(EXTRA_CFLAGS)" $(EXTRA_KCONFIG) modules
