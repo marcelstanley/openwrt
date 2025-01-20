@@ -1,0 +1,4 @@
+[submodule "package/kernel/lunatik/src"]
+	path = package/kernel/lunatik/src
+	url = git@github.com:luainkernel/lunatik.git
+	branch = marcel_openwrt
